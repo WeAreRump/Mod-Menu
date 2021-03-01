@@ -96,7 +96,7 @@ Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.TextSize = 20.000
 Title.TextWrapped = true
 
-UserInputService.InptBegan:Connect(function(input, chat)
+UserInputService.InputBegan:Connect(function(input, chat)
 	local Visible = false
 
 	if input.KeyCode == Enum.KeyCode.F2 and not chat then
