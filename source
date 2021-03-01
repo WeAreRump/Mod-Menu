@@ -1,0 +1,175 @@
+if MENU_LOADED and not _G.MM_DEBUG == true then return end
+
+pcall(function() getgenv().MENU_LOADED  = true end)
+
+while not game:IsLoaded() or not game:GetService("Players") or not game:GetService("CoreGui") or not game:GetService("UserInputService") do wait() end
+
+Players = game:GetService("Players")
+UserInputService = game:GetService("UserInputService")
+
+Modal = Instance.new("TextButton")
+MenuHolder = Instance.new("Frame")
+MenuHolder_2 = Instance.new("Frame")
+Speed = Instance.new("TextButton")
+Title = Instance.new("TextLabel")
+
+function randomstring()
+	local length = math.random(10,20)
+	local array = {}
+	for i = 1, length do
+		array[i] = string.char(math.random(32, 126))
+	end
+	return table.concat(array)
+end
+
+COREGUI = game:GetService("CoreGui")
+PARENT = nil
+if (not is_sirhurt_closure) and (syn and syn.protect_gui) then
+	local ModMenuGui = Instance.new("ScreenGui")
+	ModMenuGui.Name = randomstring()
+	syn.protect_gui(ModMenuGui)
+	ModMenuGui.Parent = COREGUI
+	PARENT = ModMenuGui
+elseif get_hidden_gui or gethui then
+	local hiddenUI = get_hidden_gui or gethui
+	local ModMenuGui = Instance.new("ScreenGui")
+	ModMenuGui.Name = randomstring()
+	ModMenuGui.Parent = hiddenUI()
+	PARENT = ModMenuGui
+elseif COREGUI:FindFirstChild('RobloxGui') then
+	PARENT = COREGUI.RobloxGui
+else
+	local ModMenuGui = Instance.new("ScreenGui")
+	ModMenuGui.Name = randomstring()
+	ModMenuGui.Parent = COREGUI
+	PARENT = ModMenuGui
+end
+
+Modal.Name = "Modal"
+Modal.Parent = PARENT
+Modal.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Modal.BackgroundTransparency = 1.000
+Modal.Size = UDim2.new(1, 0, 1, 0)
+Modal.Modal = true
+Modal.Font = Enum.Font.SourceSans
+Modal.Text = ""
+Modal.TextColor3 = Color3.fromRGB(0, 0, 0)
+Modal.TextSize = 14.000
+Modal.Visible = false
+
+MenuHolder.Name = "MenuHolder"
+MenuHolder.Parent = Modal
+MenuHolder.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MenuHolder.BackgroundTransparency = 0.250
+MenuHolder.BorderSizePixel = 0
+MenuHolder.Position = UDim2.new(0.009765625, 0, 0.0216450226, 0)
+MenuHolder.Size = UDim2.new(0, 300, 0, 25)
+
+MenuHolder_2.Name = "MenuHolder"
+MenuHolder_2.Parent = MenuHolder
+MenuHolder_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MenuHolder_2.BackgroundTransparency = 0.500
+MenuHolder_2.BorderSizePixel = 0
+MenuHolder_2.Position = UDim2.new(-0.000234374995, 0, 1, 0)
+MenuHolder_2.Size = UDim2.new(0, 300, 0, 300)
+
+Speed.Name = "Speed"
+Speed.Parent = MenuHolder_2
+Speed.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Speed.BackgroundTransparency = 1.000
+Speed.Size = UDim2.new(0, 300, 0, 25)
+Speed.Font = Enum.Font.SourceSansBold
+Speed.Text = "  Speed: Off"
+Speed.TextColor3 = Color3.fromRGB(255, 255, 255)
+Speed.TextSize = 20.000
+Speed.TextWrapped = true
+Speed.TextXAlignment = Enum.TextXAlignment.Left
+
+Title.Name = "Title"
+Title.Parent = MenuHolder
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1.000
+Title.Size = UDim2.new(0, 300, 0, 25)
+Title.Font = Enum.Font.SourceSansBold
+Title.Text = "Mod Menu"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 20.000
+Title.TextWrapped = true
+
+UserInputService.InptBegan:Connect(function(input, chat)
+	local Visible = false
+
+	if input.KeyCode == Enum.KeyCode.F2 and not chat then
+		if not Visible then
+			Modal.Visible = true
+			Visible = true
+		else
+			Modal.Visible = false
+			Visible = false
+		end
+	end
+end)
+
+Speed.MouseButton1Click:Connect(function()
+	local IsOn = false
+	
+	if not IsOn then
+		if _G.Speed ~= nil then
+			if _G.JumpPower ~= nil then
+				IsOn = true
+				
+				if _G.Speed >= 29 then
+					Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.Speed
+					Speed.Text = "  Speed: On"
+				else
+					error("Mod Menu Error\nSpeed is lower than 30. Please set the Speed above than 30.")
+
+					game.StarterGui:SetCore("SendNotification", {
+						Title = "Error",
+						Text = "An error has occured. Please check the console for error information.",
+						Duration = 8.5,
+						Icon = "rbxassetid://6328819715"
+					})
+				end
+
+				if _G.JumpPower >= 99 then
+					Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpPower
+					Speed.Text = "  Speed: On"
+				else
+					error("Mod Menu Error\nJump Power is lower than 100. Please set the Jump Power above than 100.")
+
+					game.StarterGui:SetCore("SendNotification", {
+						Title = "Error",
+						Text = "An error has occured. Please check the console for error information.",
+						Duration = 8.5,
+						Icon = "rbxassetid://6328819715"
+					})
+				end
+			else
+				error("The _G JumpPower has not been found; Please try executing the Mod Menu again or put _G.JumpPower at your exploit editor.")
+
+				game.StarterGui:SetCore("SendNotification", {
+					Title = "Error",
+					Text = "An error has occured. Please check the console for error information.",
+					Duration = 8.5,
+					Icon = "rbxassetid://6328819715"
+				})
+			end
+		else
+			error("The _G Speed has not been found; Please try executing the Mod Menu again or put _G.Speed at your exploit editor.")
+
+			game.StarterGui:SetCore("SendNotification", {
+				Title = "Error",
+				Text = "An error has occured. Please check the console for error information.",
+				Duration = 8.5,
+				Icon = "rbxassetid://6328819715"
+			})
+		end
+	else
+		IsOn = false
+		Speed.Text = "  Speed: Off"
+		
+		Players.LocalPlayer.Character.Humanoid.WalkSpeed = game.StarterPlayer.CharacterWalkSpeed
+		Players.LocalPlayer.Character.Humanoid.JumpPower = game.StarterPlayer.CharacterJumpPower
+	end
+end)
